@@ -1,0 +1,8 @@
+/credentials
+
+/node-1-persistence
+/node-2-persistence
+/db
+/node/node.socket
+
+.DS_Store

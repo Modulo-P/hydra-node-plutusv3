@@ -1,0 +1,106 @@
+services:
+  cardano-node:
+    image: ghcr.io/intersectmbo/cardano-node:8.9.0
+    volumes:
+      - ./node:/ipc
+      - ./db:/data/db
+    environment:
+      - NETWORK=sanchonet
+    restart: always
+
+  hydra-node-1:
+    image: ghcr.io/modulo-p/hydra-node:latest
+    volumes:
+      - ./credentials:/credentials:ro
+      - ./node:/node
+      - ./node-1-persistence:/persistence
+    ports:
+      - "4001:4001"
+    command:
+      [
+        "--node-id",
+        "1",
+        "--api-host",
+        "0.0.0.0",
+        "--host",
+        "172.16.238.10",
+        "--monitoring-port",
+        "6001",
+        "--peer",
+        "hydra-node-2:5001",
+        "--hydra-scripts-tx-id",
+        "8eebdf6c3aa8a90b206a89f2c6d2ecf1795f1da690eb3d840b01b91b360c5fbd",
+        "--persistence-dir",
+        "/persistence",
+        "--hydra-signing-key",
+        "/credentials/hydra-node-1.sk",
+        "--hydra-verification-key",
+        "/credentials/hydra-node-2.vk",
+        "--cardano-signing-key",
+        "/credentials/cardano-node-1.sk",
+        "--cardano-verification-key",
+        "/credentials/cardano-node-2.vk",
+        "--ledger-protocol-parameters",
+        "/node/protocol-parameters.json",
+        "--testnet-magic",
+        "4",
+        "--node-socket",
+        "/node/node.socket"
+      ]
+    networks:
+      hydra_net:
+        ipv4_address: 172.16.238.10
+    restart: always
+
+  hydra-node-2:
+    image: ghcr.io/modulo-p/hydra-node:latest
+    volumes:
+      - ./credentials:/credentials:ro
+      - ./node:/node
+      - ./node-2-persistence:/persistence
+    ports:
+      - "4002:4001"
+    command:
+      [
+        "--node-id",
+        "2",
+        "--api-host",
+        "0.0.0.0",
+        "--host",
+        "172.16.238.20",
+        "--monitoring-port",
+        "6001",
+        "--peer",
+        "hydra-node-1:5001",
+        "--hydra-scripts-tx-id",
+        "8eebdf6c3aa8a90b206a89f2c6d2ecf1795f1da690eb3d840b01b91b360c5fbd",
+        "--persistence-dir",
+        "/persistence",
+        "--hydra-signing-key",
+        "/credentials/hydra-node-2.sk",
+        "--hydra-verification-key",
+        "/credentials/hydra-node-1.vk",
+        "--cardano-signing-key",
+        "/credentials/cardano-node-2.sk",
+        "--cardano-verification-key",
+        "/credentials/cardano-node-1.vk",
+        "--ledger-protocol-parameters",
+        "/node/protocol-parameters.json",
+        "--testnet-magic",
+        "4",
+        "--node-socket",
+        "/node/node.socket"
+      ]
+    networks:
+      hydra_net:
+        ipv4_address: 172.16.238.20
+    restart: always
+
+networks:
+  hydra_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
+          gateway: 172.16.238.1
