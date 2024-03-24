@@ -1,0 +1,48 @@
+{
+  "preamble": {
+    "title": "aiken-lang/plutusv3-validator",
+    "description": "Aiken contracts for project 'aiken-lang/plutusv3-validator'",
+    "version": "0.0.0",
+    "plutusVersion": "v2",
+    "compiler": {
+      "name": "Aiken",
+      "version": "v1.0.25-alpha+4e8042f"
+    },
+    "license": "Apache-2.0"
+  },
+  "validators": [
+    {
+      "title": "plutusv3_validator.plutusv3_validator",
+      "datum": {
+        "title": "datum",
+        "schema": {
+          "$ref": "#/definitions/Int"
+        }
+      },
+      "redeemer": {
+        "title": "_redeemer",
+        "schema": {
+          "$ref": "#/definitions/Void"
+        }
+      },
+      "compiledCode": "584701000032323232232232253330063370e66f2928a441012a0000414984d958c94ccc014cdc3a4000600c0022a666010600e0022930b0b1baa001375a002ae6955ceaab9e5573e1",
+      "hash": "ab4f9e88462d8dab9e1520c0d7ef8bf92fe72783a96920fecf442390"
+    }
+  ],
+  "definitions": {
+    "Int": {
+      "dataType": "integer"
+    },
+    "Void": {
+      "title": "Unit",
+      "description": "The nullary constructor.",
+      "anyOf": [
+        {
+          "dataType": "constructor",
+          "index": 0,
+          "fields": []
+        }
+      ]
+    }
+  }
+}

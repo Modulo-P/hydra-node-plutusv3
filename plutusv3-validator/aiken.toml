@@ -1,0 +1,14 @@
+name = "aiken-lang/plutusv3-validator"
+version = "0.0.0"
+license = "Apache-2.0"
+description = "Aiken contracts for project 'aiken-lang/plutusv3-validator'"
+
+[repository]
+user = "aiken-lang"
+project = "plutusv3-validator"
+platform = "github"
+
+[[dependencies]]
+name = "aiken-lang/stdlib"
+version = "1.7.0"
+source = "github"

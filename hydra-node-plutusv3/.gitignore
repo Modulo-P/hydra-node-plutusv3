@@ -2,7 +2,7 @@
 
 /node-1-persistence
 /node-2-persistence
-/db
+/db*
 /node/node.socket
 
 .DS_Store
