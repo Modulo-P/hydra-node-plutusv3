@@ -1,3 +1,5 @@
+#! /bin/bash
+
 websocat -U "ws://0.0.0.0:4001?history=no" \
   | jq "select(.tag == \"Greetings\") \
     | .snapshotUtxo \
@@ -8,7 +10,7 @@ LOVELACE=1000000
 cardano-cli conway transaction build-raw \
   --tx-in $(jq -r 'to_entries[0].key' < head-utxo.json) \
   --tx-out $(cat ../plutusv3-validator/script.addr)+${LOVELACE} \
-  --tx-out-inline-datum-value {} \
+  --tx-out-inline-datum-value 0 \
   --tx-out $(cat ../hydra-node-plutusv3/credentials/cardano-funds-1.addr)+$(jq "to_entries[0].value.value.lovelace - ${LOVELACE}" < head-utxo.json) \
   --fee 0 \
   --out-file tx.json
@@ -19,4 +21,4 @@ cardano-cli conway transaction sign \
   --signing-key-file ../hydra-node-plutusv3/credentials/cardano-funds-1.sk \
   --out-file tx-signed.json
 
-cat tx-signed.json | jq -c '{tag: "NewTx", transaction: .cborHex}'
+cat tx-signed.json | jq -c '{tag: "NewTx", transaction: { type: "Tx ConwayEra", description: "", cborHex: .cborHex}}'

@@ -14,35 +14,24 @@
     {
       "title": "plutusv3_validator.plutusv3_validator",
       "datum": {
-        "title": "datum",
+        "title": "_datum",
         "schema": {
           "$ref": "#/definitions/Int"
         }
       },
       "redeemer": {
-        "title": "_redeemer",
+        "title": "redeemer",
         "schema": {
-          "$ref": "#/definitions/Void"
+          "$ref": "#/definitions/Int"
         }
       },
-      "compiledCode": "584701000032323232232232253330063370e66f2928a441012a0000414984d958c94ccc014cdc3a4000600c0022a666010600e0022930b0b1baa001375a002ae6955ceaab9e5573e1",
-      "hash": "ab4f9e88462d8dab9e1520c0d7ef8bf92fe72783a96920fecf442390"
+      "compiledCode": "582501000032232232253330063370e66f2928a441012a0000214984d958dd68009bad00157341",
+      "hash": "19ff6f89ca94015c6ea1ef1e506e50310d7facf9d3e8c57541a1a960"
     }
   ],
   "definitions": {
     "Int": {
       "dataType": "integer"
-    },
-    "Void": {
-      "title": "Unit",
-      "description": "The nullary constructor.",
-      "anyOf": [
-        {
-          "dataType": "constructor",
-          "index": 0,
-          "fields": []
-        }
-      ]
     }
   }
 }

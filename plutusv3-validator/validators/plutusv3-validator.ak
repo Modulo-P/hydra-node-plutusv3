@@ -5,7 +5,7 @@ use aiken/transaction.{OutputReference, ScriptContext, Spend, TransactionId}
  
 validator {
   fn plutusv3_validator(
-    _datum: Void,
+    _datum: Int,
     redeemer: Int,
     _context: ScriptContext,
   ) -> Bool {
@@ -16,7 +16,7 @@ validator {
 
 
 test plutusv3_validator_test() {
-   let datum = Void
+   let datum = 0
  
   let redeemer = 42
  
