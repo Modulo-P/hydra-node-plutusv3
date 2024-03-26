@@ -1,12 +1,14 @@
 #! /bin/bash
+LOVELACE=1000000
 
 websocat -U "ws://0.0.0.0:4001?history=no" \
   | jq "select(.tag == \"Greetings\") \
     | .snapshotUtxo \
-    | with_entries(select(.value.address == \"$(cat ../hydra-node-plutusv3/credentials/cardano-funds-1.addr)\"))" \
+    | with_entries(select(.value.address == \"$(cat ../hydra-node-plutusv3/credentials/cardano-funds-1.addr)\" and \
+      .value.value.lovelace != ${LOVELACE}))" \
   > head-utxo.json
 
-LOVELACE=1000000
+
 cardano-cli conway transaction build-raw \
   --tx-in $(jq -r 'to_entries[0].key' < head-utxo.json) \
   --tx-out $(cat ../plutusv3-validator/script.addr)+${LOVELACE} \
